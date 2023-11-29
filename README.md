@@ -1,9 +1,11 @@
 # Metadata Collection from Dask Workloads: 
 
 ## Dask Workflow Example:
-The [image processing notebook](https://github.com/GueroudjiAmal/Recup/image-rocessing.ipynb) from [Dask examples](https://github.com/dask/dask-examples/) contains an image processing pipeline. In this version, we use the distributed scheduler of Dask rather rath plain Dask. The notebook has been edited for this work purpose: Metadata data collection from Dask Distributed Workflows. 
+The [image processing notebook](https://github.com/GueroudjiAmal/Recup/image-processing.ipynb) from [Dask examples](https://github.com/dask/dask-examples/) contains an image processing pipeline. In this version, we use the distributed scheduler of Dask rather rath plain Dask. The notebook has been edited for this work purpose: Metadata Collection from Dask Distributed Workflows. 
 
-The Screenshot [video](Media/Dashboard.webm) in this repo shows the Dashboard of a Dask Cluster running the image processing notebook. we can see how the workflow progresses, the distribution of the tasks over threads, the occupancy of the workers, and so on. More documentation on the performance profiling and Dask Dashboard are [here](https://docs.dask.org/en/stable/debugging-performance.html)
+The Screenshot [video](Media/Dashboard.webm) in this repo shows the Dashboard of a Dask Cluster running the image processing notebook. we can see how the workflow progresses, the distribution of the tasks over threads, the occupancy of the workers, and so on. 
+
+More documentation on the performance profiling and Dask Dashboard are [here](https://docs.dask.org/en/stable/debugging-performance.html).
 
 ## Dask Metadata Data Map
 In a typical Dask workload, several metadata can be collected. These metadata can be represented in several layers ( Job level, Dask configuration, Task graph, Task, Runtime …) 
