@@ -1,7 +1,7 @@
 # Metadata Collection from Dask Workloads: 
 
 ## Dask Workflow Example:
-The [image processing notebook](https://github.com/GueroudjiAmal/Recup/image-processing.ipynb) from [Dask examples](https://github.com/dask/dask-examples/) contains an image processing pipeline. In this version, we use the distributed scheduler of Dask rather rath plain Dask. The notebook has been edited for this work purpose: Metadata Collection from Dask Distributed Workflows. 
+The [image processing notebook](Notebooks/image-processing.ipynb) from [Dask examples](https://github.com/dask/dask-examples/) contains an image processing pipeline. In this version, we use the distributed scheduler of Dask rather rath plain Dask. The notebook has been edited for this work purpose: Metadata Collection from Dask Distributed Workflows. 
 
 The Screenshot [video](Media/Dashboard.webm) in this repo shows the Dashboard of a Dask Cluster running the image processing notebook. we can see how the workflow progresses, the distribution of the tasks over threads, the occupancy of the workers, and so on. 
 
