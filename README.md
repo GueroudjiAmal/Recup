@@ -3,7 +3,7 @@
 ## Dask Workflow Example:
 The [image processing notebook](Notebooks/image-processing.ipynb) from [Dask examples](https://github.com/dask/dask-examples/) contains an image processing pipeline. In this version, we use the distributed scheduler of Dask rather rath plain Dask. The notebook has been edited for this work purpose: Metadata Collection from Dask Distributed Workflows. 
 
-The Screenshot [video](Media/Dashboard.webm) in this repo shows the Dashboard of a Dask Cluster running the image processing notebook. we can see how the workflow progresses, the distribution of the tasks over threads, the occupancy of the workers, and so on. 
+The Screenshot video in this repo shows the Dashboard of a Dask Cluster running the image processing notebook. we can see how the workflow progresses, the distribution of the tasks over threads, the occupancy of the workers, and so on. 
 
 More documentation on the performance profiling and Dask Dashboard are [here](https://docs.dask.org/en/stable/debugging-performance.html).
 
@@ -23,7 +23,7 @@ Column [A-B-C] shows the evolution of a typical Dask workflow, which metadata we
     - Job configuration: nodes, processes, cores
     - The data collected at this step is static and can be retrieved from the different files (job script, [distributed.yaml](https://docs.dask.org/en/latest/configuration.html))
 2. Step 2: Task creation and submission. It happens at the client level
-    - usually it is a Python script describing the workflows.
+    - usually, it is a Python script describing the workflows.
     - The metadata can be retrieved from the script, it is static, and lazy (tasks are created and then submitted to the cluster to be run later) 
 NB: The task graph may be optimized by Dask, check [Phases of a coputation](https://docs.dask.org/en/latest/phases-of-computation.html)
 3. Step 3: The population of internal Dask structures:
