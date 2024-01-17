@@ -106,7 +106,7 @@ def main(mode, yappi_config, dask_perf_report, task_graph, task_stream, schedule
         yappi.run(),
     ):
 
-        images = dask_image.imread.imread(filename_pattern)[:10]
+        images = dask_image.imread.imread(filename_pattern)
         print(images)
         try:
             normalized_images = (images - da.min(images)) * (255.0 / (da.max(images) - da.min(images)))
@@ -185,6 +185,7 @@ if __name__ == "__main__":
                         dest='task_stream', 
                         type=str,   
                         help='None by default, if mentioned it corresponds to filename of the task-stream')
+    
     parser.add_argument('--Scheduler_file', 
                         action='store', 
                         dest='Scheduler_file', 
