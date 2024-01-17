@@ -135,11 +135,14 @@ def main(mode, yappi_config, dask_perf_report, task_graph, task_stream, schedule
             print("There was an excp ", e )
 
     # Output Reports for yappi
-    yappi.get_func_stats().save(ReportDir+"yappi.pstat", type="ystat")
+    yappi.get_func_stats().save(ReportDir+"yappi_pstat.prof", type="pstat")
+    yappi.get_func_stats().save(ReportDir+"yappi_callgrind.prof", type="callgrind")
 
     with open(ReportDir + "yappi.debug.yaml", 'w') as f:
+        sys.stdout = f
         yaml.dump(yappi.get_func_stats().debug_print())
-
+        sys.stdout = stdout
+        
     # Output task stream
     with open(ReportDir + task_stream, 'w') as f:
         yaml.dump(client.get_task_stream(), f)
