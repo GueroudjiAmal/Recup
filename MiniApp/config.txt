@@ -1,0 +1,6 @@
+# bump up Darshan's default memory usage to 8 MiB
+MODMEM  8
+
+# allocate 4096 file records for POSIX module
+# (darshan only allocates 1024 per-module by default)
+MAX_RECORDS     4096      POSIX
