@@ -42,6 +42,6 @@ There will be two subdirs:
     *  `yappi.debug.yaml` `yappi.pstat` contains the debug reports from yappi
     *  `hostname_python_id*.darshan` contains darshan outputs
   + Results:
-    * Labeled: a Dir of labeled images
-    * Normalized: a dir of the normalized images
-    * Threshold: a dir of the images afer a 0.75*max threshold was applied
+    * `Labeled`: a Dir of labeled images
+    * `Normalized`: a dir of the normalized images
+    * `Threshold`: a dir of the images afer a 0.75*max threshold was applied
