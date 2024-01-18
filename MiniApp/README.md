@@ -6,7 +6,7 @@ MiniApp with: ​
      * Here is an example `python image_processing.py --mode=distributed --scheduler-file=scheduler.json` 
 - 2 Yappi modes (CPU/WALL) time​
      * By default yappi will output WALL time but you can choose to output CPU time
-     * Here is an example `python image_processing.py --tappi=cpu`
+     * Here is an example `python image_processing.py --yappi=cpu`
 
 
 # Dataset:
