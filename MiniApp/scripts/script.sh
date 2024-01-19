@@ -1,6 +1,6 @@
 #!/bin/bash -l
-#PBS -l walltime=0:59:00
-#PBS -q prod 
+#PBS -l walltime=0:10:00
+#PBS -q debug-scaling 
 #PBS -A radix-io
 #PBS -l filesystems=home:grand:eagle
 
@@ -10,17 +10,12 @@ NWORKERS=$(( NNODES - 2))
 
 NRANKS=2 # Number of MPI ranks to spawn per node
 NDEPTH=16 # Number of hardware threads per rank (i.e. spacing between MPI ranks)
-NTHREADS=16 # Number of software threads per rank to launch (i.e. OMP_NUM_THREADS)
-NTOTRANKS=$(( NNODES * NRANKS ))
 
 echo "WORKERS_NODES= ${NWORKERS}"
 source  ~/spack/share/spack/setup-env.sh
 spack env activate recup
 
-# Must add those for darshan 
-# DARSHAN_ENABLE_NONMPI=1 
-# DARSHAN_CONFIG_PATH="config.txt"  
-# LD_PRELOAD="/home/agueroudji/spack/opt/spack/linux-ubuntu22.04-skylake/gcc-11.4.0/darshan-runtime-3.4.4-kpqruvlpsxnx6bbam37q2loduoxnrmzt/lib/libdarshan.so"
+LD_PRELOAD="/home/agueroudji/spack/opt/spack/linux-ubuntu22.04-skylake/gcc-11.4.0/darshan-runtime-3.4.4-kpqruvlpsxnx6bbam37q2loduoxnrmzt/lib/libdarshan.so"
 
 cd $PBS_O_WORKDIR
 SCHEFILE=scheduler.json
@@ -46,7 +41,7 @@ sed -n "${start_3},${end_3}p" $PBS_NODEFILE > WorkerNodes
 sed -n "${start_4},${end_4}p" $PBS_NODEFILE > SimuNodes
 
 echo launching Scheduler 
-mpiexec  -n 1 --ppn 1 -d ${NDEPTH} --hostfile SchedulerNode --exclusive --cpu-bind depth  dask scheduler --scheduler-file=$SCHEFILE 1>> scheduler.o  2>> scheduler.e  &
+DARSHAN_ENABLE_NONMPI=1 DARSHAN_CONFIG_PATH="config.txt" LD_PRELOAD=$LIBDARSHAN mpiexec  -n 1 --ppn 1 -d ${NDEPTH} --hostfile SchedulerNode --exclusive --cpu-bind depth  dask scheduler --scheduler-file=$SCHEFILE 1>> scheduler.o  2>> scheduler.e  &
 
 # Wait for the SCHEFILE to be created 
 while ! [ -f $SCHEFILE ]; do
@@ -56,7 +51,7 @@ done
 
 # Connect the client to the Dask scheduler
 echo Connect Master Client  
- mpiexec  -n 1 --ppn 1  -d ${NDEPTH}  --hostfile ClientNode --exclusive --cpu-bind depth  `which python` image_processing.py --mode=distributed --scheduler-file=$SCHEFILE 1>> client.o 2>> client.e &
+DARSHAN_ENABLE_NONMPI=1 DARSHAN_CONFIG_PATH="config.txt" LD_PRELOAD=$LIBDARSHAN mpiexec  -n 1 --ppn 1  -d ${NDEPTH}  --hostfile ClientNode --exclusive --cpu-bind depth  `which python` image_processing.py --mode=distributed --scheduler-file=$SCHEFILE 1>> client.o 2>> client.e &
 
 client_pid=$!
 
@@ -64,7 +59,7 @@ client_pid=$!
 echo Scheduler booted, Client connected, launching workers 
 
 NPROC=$((NWORKERS * NRANKS))
-mpiexec  -n ${NPROC} --ppn ${RANKS}  -d ${NDEPTH}  --hostfile WorkerNodes --exclusive --cpu-bind depth  dask worker  --scheduler-file=$SCHEFILE 1>> worker.o 2>>worker.e  &
+DARSHAN_ENABLE_NONMPI=1 DARSHAN_CONFIG_PATH="config.txt" LD_PRELOAD=$LIBDARSHAN mpiexec  -n ${NPROC} --ppn ${RANKS}  -d ${NDEPTH}  --hostfile WorkerNodes --exclusive --cpu-bind depth  dask worker  --scheduler-file=$SCHEFILE 1>> worker.o 2>>worker.e  &
 
 # Wait for the client process to be finished 
 wait $client_pid
