@@ -189,7 +189,7 @@ if __name__ == "__main__":
                         type=str,   
                         help='None by default, if mentioned it corresponds to filename of the task-stream')
     
-    parser.add_argument('--Scheduler_file', 
+    parser.add_argument('--scheduler-file', 
                         action='store', 
                         dest='Scheduler_file', 
                         type=str, 
